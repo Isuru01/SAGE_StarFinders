@@ -2,6 +2,7 @@ import User from "../models/user.model.mjs";
 
 const createUser = async (req, res, next) => {
   try {
+    res.status(200).json({ message: `user is created` });
   } catch (error) {
     next(error);
   }

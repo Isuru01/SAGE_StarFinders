@@ -1,7 +1,8 @@
 import Plannet from "../models/plannet.model.mjs";
 
-const createPlannet = async (req, res, next) => {
-  console.log(req.body);
+const createPlannet = async (res, req, next) => {
+  const { plannet } = req.body;
+
   try {
     const { plannet } = req.body;
     const { _id } = await Plannet.create(plannet);

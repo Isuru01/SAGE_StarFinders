@@ -3,6 +3,7 @@ import Shuttle from "../models/shuttle.model.mjs";
 const createShuttle = async (req, res, next) => {
   try {
     await Shuttle.create();
+    res.status(200).json({ message: `shuttle is created` });
   } catch (error) {
     next(error);
   }
