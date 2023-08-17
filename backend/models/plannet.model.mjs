@@ -9,7 +9,7 @@ const PlannetSchema = new Schema({
   pid: {
     type: String,
   },
-  name: {
+  plannet: {
     type: String,
   },
   description: {

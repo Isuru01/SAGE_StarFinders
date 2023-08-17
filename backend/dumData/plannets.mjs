@@ -2,41 +2,41 @@ const plannets = [
   {
     pid: "MER",
     plannet: "Mercury",
-    description: "",
+    description: "Come and enjoy Mercury",
   },
   {
     pid: "VEN",
     plannet: "Venus",
-    description: "",
+    description: "Come and enjoy Venus",
   },
   {
     pid: "MAR",
     plannet: "Mars",
-    description: "",
+    description: "Come and enjoy Mars",
   },
   {
     pid: "ETH",
     plannet: "Earth",
-    description: "",
+    description: "Come and enjoy Earth",
   },
   {
     pid: "JUP",
     plannet: "Jupiter",
-    description: "",
+    description: "Come and enjoy Jupiter",
   },
   {
     pid: "SAT",
     plannet: "Saturn",
-    description: "",
+    description: "Come and enjoy Saturn",
   },
   {
     pid: "URA",
     plannet: "Uranus",
-    description: "",
+    description: "Come and enjoy Uranus",
   },
   {
     pid: "NEP",
     plannet: "Neptune",
-    description: "",
+    description: "Come and enjoy Neptune",
   },
 ];
