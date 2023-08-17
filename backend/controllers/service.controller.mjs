@@ -1,8 +1,13 @@
 import Service from "../models/service.model.mjs";
+import Fee from "../models/fee.model.mjs";
 
 const createService = async (req, res, next) => {
+  const { fee, ...service } = req.body;
   try {
-    await Service.create();
+    const { _id } = await Fee.create(fee);
+    const result = await Service.create({ ...service, fee });
+
+    res.status(200), json({ message: "Service created" });
   } catch (error) {
     next(error);
   }

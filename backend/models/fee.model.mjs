@@ -5,6 +5,9 @@ const FeeSchema = new Schema({
   key: {
     type: String,
   },
+  price: {
+    type: Number,
+  },
 });
 
 FeeSchema.pre("save", function (next) {
