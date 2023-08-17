@@ -1,5 +1,5 @@
 import { Schema, SchemaType, model } from "mongoose";
-import Fee from "../models/fee.model.mjs";
+
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 
@@ -43,5 +43,5 @@ ShuttleSchema.pre("save", function (next) {
   next();
 });
 
-const ShuttleeModel = model("Service", ShuttleSchema);
+const ShuttleeModel = model("Shuttle", ShuttleSchema);
 export default ShuttleeModel;

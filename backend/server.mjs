@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
-
+import { connectDB } from "./config/db.config.mjs";
+import errorHandler from "./middleware/errorHandler.mjs";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -15,6 +16,7 @@ import cookieParser from "cookie-parser";
 // import router_search from "./routes/search.router.mjs";
 // import router_doctor from "./routes/doctor.router.mjs";
 
+import router_search from "./routes/search.router.mjs";
 import router_service from "./routes/service.router.mjs";
 import router_user from "./routes/user.route.mjs";
 import router_shuttle from "./routes/shuttle.router.mjs";
@@ -56,6 +58,7 @@ app.use(urlencoded({ extended: true }));
 app.use("/api/shuttle", router_shuttle);
 app.use("/api/service", router_service);
 app.use("/api/user", router_user);
+app.use("/api/search", router_search);
 app.use(errorHandler);
 
 // cron.schedule("* * * * *", createEvent);
@@ -63,7 +66,7 @@ app.use(errorHandler);
 const startServer = async () => {
   try {
     app.listen(8080, () => {
-      //   connectDB();
+      connectDB();
       console.log("Server started on port http://localhost:8080");
     });
   } catch (err) {
