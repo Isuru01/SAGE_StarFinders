@@ -2,6 +2,7 @@ import Service from "../models/service.model.mjs";
 
 const createService = async (req, res, next) => {
   try {
+    await Service.create();
   } catch (error) {
     next(error);
   }
