@@ -2,6 +2,7 @@ import Shuttle from "../models/shuttle.model.mjs";
 
 const createShuttle = async (req, res, next) => {
   try {
+    await Shuttle.create();
   } catch (error) {
     next(error);
   }
@@ -9,6 +10,7 @@ const createShuttle = async (req, res, next) => {
 
 const getShuttle = async (req, res, next) => {
   try {
+    //test commit2
   } catch (error) {
     next(error);
   }
