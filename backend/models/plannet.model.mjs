@@ -17,12 +17,12 @@ const PlannetSchema = new Schema({
   },
 });
 
-ServiceSchema.pre("save", function (next) {
+PlannetSchema.pre("save", function (next) {
   if (!this.key) {
     this.key = uuidv4();
   }
   next();
 });
 
-const PlannetModel = model("Plannet", PlannetSchemaSchema);
+const PlannetModel = model("Plannet", PlannetSchema);
 export default PlannetModel;
