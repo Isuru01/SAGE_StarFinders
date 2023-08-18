@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import RocketIcon from "@mui/icons-material/Rocket";
 import { blue, green } from "@mui/material/colors";
-import { Card, Typography, Box, Button, Modal } from "@mui/material";
+import dayjs from "dayjs";
+
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+import { Card, Typography, Box, Button, Modal, duration } from "@mui/material";
 import ClassModal from "../modal/ClassModal";
 
-const ShuttleCard = () => {
+const ShuttleCard = ({ data, index }) => {
+  const { key, depTime, arrTime, carrier, duration, arrPort, depPort } = data;
+
   const [open, setOpen] = useState(false);
 
   const handleOption = () => {
@@ -19,7 +25,7 @@ const ShuttleCard = () => {
     <>
       <Card onClick={handleOption} sx={{ bgcolor: "#C5C3F4", mt: 2, p: 1 }}>
         <Typography sx={{ fontWeight: "500", mb: 1 }}>
-          Opt 1 Non Stop 3h 00min
+          Opt {index + 1} Non Stop {duration.slice(0, 15)}
         </Typography>
 
         <Box
@@ -43,22 +49,26 @@ const ShuttleCard = () => {
               <Typography
                 sx={{ fontSize: "1.2rem", fontWeight: 500, lineHeight: 1.3 }}
               >
-                Earth
+                {depPort}
+              </Typography>
+              <Typography sx={{ fontSize: "0.6rem", lineHeight: 1.4 }}>
+                On {formatTime(depTime)[0]}
               </Typography>
               <Typography sx={{ fontSize: "0.6rem", lineHeight: 1 }}>
-                On 24h 00min <br /> Sun, Jul 23
+                {formatTime(depTime)[1]}
               </Typography>
             </Box>
             <Box>
               <Typography
-                sx={{ fontSize: "1.2rem", fontWeight: 500, lineHeight: 1.43 }}
+                sx={{ fontSize: "1.2rem", fontWeight: 500, lineHeight: 1.3 }}
               >
-                Jupitar
+                {arrPort}
               </Typography>
-              <Typography
-                sx={{ fontSize: "0.6rem", lineHeight: 1, textAlign: "right" }}
-              >
-                On 24h 00min <br /> Sun, Jul 23
+              <Typography sx={{ fontSize: "0.6rem", lineHeight: 1.4 }}>
+                On {formatTime(depTime)[0]}
+              </Typography>
+              <Typography sx={{ fontSize: "0.6rem", lineHeight: 1 }}>
+                {formatTime(depTime)[1]}
               </Typography>
             </Box>
           </Box>
@@ -73,16 +83,21 @@ const ShuttleCard = () => {
             borderTop: "1px solid #FFFFFF",
           }}
         >
-          <Typography variant="subtitle2">Carrier Virgin</Typography>
+          <Typography variant="subtitle2">Carrier {carrier}</Typography>
           <Button size="small" variant="outlined">
             Book
           </Button>
         </Box>
       </Card>
 
-      <ClassModal open={open} handleClose={handleClose} />
+      <ClassModal shuttle={key} open={open} handleClose={handleClose} />
     </>
   );
+};
+
+const formatTime = (time) => {
+  const date = dayjs(time, "YYYY-MM-DDTHH:mm:ss");
+  return date.format(`HH[h] mm[min]  \n ddd, MMM DD`).split("\n");
 };
 
 export default ShuttleCard;

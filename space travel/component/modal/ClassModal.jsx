@@ -4,12 +4,12 @@ import { blue, green } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { Card, Typography, Box, Button, Modal, Stack } from "@mui/material";
 
-const OptionModal = ({ open, handleClose }) => {
+const OptionModal = ({ open, handleClose, shuttle }) => {
   const [selectedOption, setSelectedOption] = useState("Business");
   const naviagte = useNavigate();
 
   const handleProceed = () => {
-    naviagte(`/booking/1231231/${selectedOption}/2023-12-21`);
+    naviagte(`/booking/${shuttle}/${selectedOption}/2023-12-21`);
   };
 
   const handleSelected = (option) => {

@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
+import dayjs from "dayjs";
 import { connectDB } from "./config/db.config.mjs";
+
 import errorHandler from "./middleware/errorHandler.mjs";
 import express from "express";
 import cors from "cors";
@@ -8,6 +10,7 @@ import morgan from "morgan";
 // import { connectDB } from "./config/db.config.mjs";
 // import { createEvent } from "./controllers/event.controller.mjs";
 import cron from "node-cron";
+import { scheduleShuttle } from "./controllers/shuttle.controller.mjs";
 import cookieParser from "cookie-parser";
 // import errorHandler from "./middleware/errorHandler.mjs";
 // import authenticate from "./middleware/authenticate.mjs";
@@ -21,6 +24,8 @@ import router_service from "./routes/service.router.mjs";
 import router_user from "./routes/user.route.mjs";
 import router_shuttle from "./routes/shuttle.router.mjs";
 import router_plannet from "./routes/planet.router.mjs";
+
+// console.log(dayjs().format("ddd"));
 
 const app = express();
 
@@ -63,7 +68,7 @@ app.use("/api/search", router_search);
 app.use("/api/plannet", router_plannet);
 app.use(errorHandler);
 
-// cron.schedule("* * * * *", createEvent);
+cron.schedule("* * * * *", scheduleShuttle);
 
 const startServer = async () => {
   try {

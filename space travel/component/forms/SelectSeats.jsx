@@ -10,7 +10,7 @@ const SelectSeats = () => {
     { seat: "2LA", reserve: false },
     { seat: "3LW", reserve: false },
     { seat: "3LA", reserve: false },
-    { seat: "4LW", reserve: true },
+    { seat: "4LW", reserve: false },
     { seat: "4LA", reserve: false },
     { seat: "5LW", reserve: false },
     { seat: "5LA", reserve: false },

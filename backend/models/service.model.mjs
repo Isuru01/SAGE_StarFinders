@@ -1,6 +1,24 @@
 import { Schema, SchemaType, model } from "mongoose";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration.js";
+
+dayjs.extend(duration);
+
+const PassengerSchema = new Schema({
+  name: {
+    type: String,
+  },
+  dob: {
+    type: String,
+  },
+  nationality: {
+    type: String,
+  },
+  GID: {
+    type: String,
+  },
+});
 
 const ServiceSchema = new Schema({
   key: {
@@ -9,9 +27,15 @@ const ServiceSchema = new Schema({
   carrier: {
     type: String,
   },
+  day: {
+    type: String,
+  },
   depTime: {
     type: String,
     required: true,
+  },
+  duration: {
+    type: String,
   },
   arrTime: {
     type: String,
@@ -22,12 +46,14 @@ const ServiceSchema = new Schema({
       {
         seat: String,
         reserve: Boolean,
+        passenger: PassengerSchema,
       },
     ],
     right: [
       {
         seat: String,
         reserve: Boolean,
+        passenger: PassengerSchema,
       },
     ],
   },
@@ -35,7 +61,7 @@ const ServiceSchema = new Schema({
     type: String,
     required: true,
   },
-  arriPort: {
+  arrPort: {
     type: String,
     required: true,
   },
@@ -50,9 +76,19 @@ ServiceSchema.pre("save", function (next) {
     this.key = uuidv4();
   }
 
-  // Pre-save values for the 'left' and 'right' arrays
+  // Calculate the duration
+  const depTime = dayjs(this.depTime);
+  const arrTime = dayjs(this.arrTime);
+  const duration = arrTime.diff(depTime);
+
+  // Format the duration as 'Days Hours Minutes'
+  this.duration = dayjs
+    .duration(duration)
+    .format("D [Days] H [Hours] m [Minutes]");
+
+  // Pre-save values for the 'left' and 'right' seat arrays
   this.seats.left = [
-    { seat: "1LW", reserve: false },
+    { seat: "1LW", reserve: false, passenger: {} },
     { seat: "1LA", reserve: false },
     { seat: "2LW", reserve: false },
     { seat: "2LA", reserve: false },

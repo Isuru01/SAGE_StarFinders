@@ -91,6 +91,7 @@ const Booking = () => {
           </Step>
         ))}
       </Stepper>
+
       {activeStep === steps.length && (
         <Paper square elevation={0} sx={{ p: 3 }}>
           <Typography>All steps completed - you&apos;re finished</Typography>

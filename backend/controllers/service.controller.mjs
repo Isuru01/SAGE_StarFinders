@@ -5,9 +5,9 @@ const createService = async (req, res, next) => {
   const { fee, ...service } = req.body;
   try {
     const { _id } = await Fee.create(fee);
-    const result = await Service.create({ ...service, fee });
+    const result = await Service.create({ ...service, _id });
 
-    res.status(200), json({ message: "Service created" });
+    res.status(200).json({ message: "Service created" });
   } catch (error) {
     next(error);
   }
