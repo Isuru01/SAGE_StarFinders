@@ -16,9 +16,9 @@ const Dashboard = () => {
     return (
         <Container>
             <Stack spacing={2}>
-            <Typography variant="h2" component="div" sx={{ fontFamily: 'Arial', textAlign: 'center' }} gutterBottom>
-                Welcome User
-            </Typography>    
+                <Typography variant="h2" component="div" sx={{ fontFamily: 'Arial', textAlign: 'center' }} gutterBottom>
+                    Welcome User
+                </Typography>
                 <Card sx={{ width: '100%', marginBottom: '16px' }}>
                     <CardContent>
                         <Paper style={{ backgroundColor: 'rgba(77, 71, 195, 1)', padding: '14px' }}>
@@ -51,9 +51,9 @@ const Dashboard = () => {
                                     borderTop: '2px solid #000', // Adjust color and size as needed
                                     margin: '16px 0',
                                 }}
-                            />  
-                                                        <Typography variant="h5" color="black" sx={{ fontFamily: 'Arial', fontSize: '16px' }}>Mars</Typography>
-                            <Typography variant="h5" color="black" sx={{ fontFamily: 'Arial', fontSize: '16px' }}>Fri, May 14, 4.40pm</Typography>                      
+                            />
+                            <Typography variant="h5" color="black" sx={{ fontFamily: 'Arial', fontSize: '16px' }}>Mars</Typography>
+                            <Typography variant="h5" color="black" sx={{ fontFamily: 'Arial', fontSize: '16px' }}>Fri, May 14, 4.40pm</Typography>
                         </Paper>
                     </CardContent>
                 </Card>
