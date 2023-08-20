@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import dayjs from "dayjs";
+import bodyParser from "body-parser";
+
 import { connectDB } from "./config/db.config.mjs";
 
 import errorHandler from "./middleware/errorHandler.mjs";
@@ -43,13 +45,14 @@ const { json, urlencoded } = express;
 
 app.use(morgan("dev"));
 
-app.use((req, res, next) => {
-  if (req.originalUrl === "/pay/webhook") {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+app.use(
+  bodyParser.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 
