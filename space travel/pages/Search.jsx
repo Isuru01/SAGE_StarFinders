@@ -1,6 +1,8 @@
 import React from "react";
 import {
   Container,
+  Box,
+  Typography,
   Stack,
   TextField,
   Autocomplete,
@@ -12,8 +14,11 @@ import SearchResults from "../component/search/SearchResults";
 const Search = () => {
   return (
     <Container>
+      <Typography varaint="h1">READY TO TAKE OFF</Typography>
+      <Box>
       <SearchBox />
       <SearchResults />
+      </Box>
     </Container>
   );
 };
