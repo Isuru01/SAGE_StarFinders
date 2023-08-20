@@ -53,8 +53,6 @@ const scheduleShuttle = async (req, res, next) => {
         "YYYY-MM-DDTHH:mm:ss"
       );
 
-      console.log(shuttleObject);
-
       const depature = dayjs(`${nextWeek}T${depTime.slice(11, 16)}`)
         .add(durationFrame[0], "day")
         .add(durationFrame[2], "hour")
