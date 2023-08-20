@@ -1,68 +1,86 @@
-import React from "react";
-import { Box } from "@mui/material";
-import { green, red, yellow } from "@mui/material/colors";
+import React, { useContext, useState } from "react";
+import { Box, Button } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+import { red, yellow, blue } from "@mui/material/colors";
+import { BookingContext } from "../../context/BookingProvider";
+import { fetchSeatMap, holdSeats } from "../../api/seats.api.mjs";
 
-const SelectSeats = () => {
-  const left = [
-    { seat: "1LW", reserve: false },
-    { seat: "1LA", reserve: false },
-    { seat: "2LW", reserve: false },
-    { seat: "2LA", reserve: false },
-    { seat: "3LW", reserve: false },
-    { seat: "3LA", reserve: false },
-    { seat: "4LW", reserve: false },
-    { seat: "4LA", reserve: false },
-    { seat: "5LW", reserve: false },
-    { seat: "5LA", reserve: false },
-    { seat: "6LW", reserve: false },
-    { seat: "6LA", reserve: false },
-    { seat: "7LW", reserve: false },
-    { seat: "7LA", reserve: false },
-    { seat: "8LW", reserve: false },
-    { seat: "9LA", reserve: false },
-    { seat: "10LW", reserve: false },
-    { seat: "10LA", reserve: false },
-  ];
+const SelectSeats = ({ onNext, onBack }) => {
+  const { sid } = useParams();
 
-  const right = [
-    { seat: "1RW", reserve: false },
-    { seat: "1RA", reserve: false },
-    { seat: "2RW", reserve: false },
-    { seat: "2RA", reserve: false },
-    { seat: "3RW", reserve: false },
-    { seat: "3RA", reserve: false },
-    { seat: "4RW", reserve: false },
-    { seat: "4RA", reserve: false },
-    { seat: "5RW", reserve: false },
-    { seat: "5RA", reserve: false },
-    { seat: "6RW", reserve: false },
-    { seat: "6RA", reserve: false },
-    { seat: "7RW", reserve: false },
-    { seat: "7RA", reserve: false },
-    { seat: "8RW", reserve: false },
-    { seat: "9RA", reserve: false },
-    { seat: "10RW", reserve: false },
-    { seat: "10RA", reserve: false },
-  ];
+  const { selected, setSelected, booking } = useContext(BookingContext);
+
+  const username = "isuruakalanka071@gmail.com";
+
+  const {
+    isLoading,
+    data: seatData,
+    refetch,
+  } = useQuery({
+    queryKey: ["ticket", sid],
+    queryFn: fetchSeatMap,
+  });
+
+  //const muatation
+  const mutation = useMutation({
+    mutationFn: holdSeats,
+    onSuccess: () => {
+      refetch();
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    mutation.mutateAsync({ username, selected, sid });
+  };
+
+  if (isLoading) return <div>Loading</div>;
+
+  const { seats } = seatData;
+
+  const left = seats.left;
+  const right = seats.right;
+
+  const handleSelect = (seat) => {
+    if (!seat.reserve) {
+      const isAlreadySelected = selected.some(
+        (item) => item.seat === seat.seat
+      );
+
+      if (isAlreadySelected) {
+        setSelected((prev) => prev.filter((item) => item.seat !== seat.seat));
+      } else {
+        if (selected.length < booking.adults) {
+          setSelected((prev) => [
+            ...prev,
+            { seat: seat.seat, bookBy: username },
+          ]);
+        }
+      }
+    }
+  };
 
   return (
     <Box
       sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 2 }}
     >
       <Box>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-          }}
-        >
-          {left.map(({ seat, reserve }) => (
+        <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+          {left.map(({ seat, reserve, step }) => (
             <Box
+              key={seat}
+              onClick={() => handleSelect({ seat, reserve })}
               sx={{
                 p: 1,
                 border: "1px solid grey",
                 textAlign: "center",
-                bgcolor: reserve ? red[200] : yellow[200],
+                bgcolor:
+                  reserve || step === 1
+                    ? red[200]
+                    : selected.some((item) => item.seat === seat)
+                    ? blue[200]
+                    : yellow[200],
               }}
             >
               {seat}
@@ -71,27 +89,46 @@ const SelectSeats = () => {
         </Box>
       </Box>
       <Box>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-          }}
-        >
-          {right.map(({ seat, reserve }) => (
+        <Box sx={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+          {right.map(({ seat, reserve, step }) => (
             <Box
+              key={seat}
+              onClick={() => handleSelect({ seat, reserve })}
               sx={{
                 p: 1,
-                backgroundSize: "cover",
-                hright: "32px",
                 border: "1px solid grey",
                 textAlign: "center",
-                bgcolor: reserve ? red[200] : yellow[200],
+                bgcolor:
+                  reserve || step === 1
+                    ? red[200]
+                    : selected.some((item) => item.seat === seat)
+                    ? blue[200]
+                    : yellow[200],
               }}
             >
               {seat}
             </Box>
           ))}
         </Box>
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{ mt: 1, mr: 1 }}
+        >
+          Save
+        </Button>
+      </Box>
+      <br />
+      <Box sx={{ mb: 2, display: "flex" }}>
+        <Button onClick={onBack} sx={{ mt: 1, mr: 1 }}>
+          Back
+        </Button>
+        <Button variant="contained" onClick={onNext} sx={{ mt: 1, mr: 1 }}>
+          Continue
+        </Button>
       </Box>
     </Box>
   );

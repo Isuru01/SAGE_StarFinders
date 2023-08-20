@@ -14,7 +14,6 @@ const SearchResults = () => {
   const query = queryParams();
 
   // console.log(date, from, to, query);
-
   const { isLoading, data: shuttleData } = useQuery({
     queryKey: ["shuttles", query],
     queryFn: fetchSearch,
