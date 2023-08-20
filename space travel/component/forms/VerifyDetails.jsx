@@ -1,9 +1,29 @@
-import React from "react";
-import { Box, Typography, Chip, Stack } from "@mui/material";
+import React, { useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { Box, Typography, Chip, Stack, Button } from "@mui/material";
 import RocketIcon from "@mui/icons-material/Rocket";
+import { updatePassenger } from "../../api/booking.api.mjs";
+import { BookingContext } from "../../context/BookingProvider";
 
-const VerifyDetails = () => {
-  const seats = ["1LW", "1LA", "2RW"];
+const VerifyDetails = ({ onBack, onNext }) => {
+  const { sid } = useParams();
+
+  const seats = [];
+
+  const { passengers } = useContext(BookingContext);
+
+  const mutation = useMutation({
+    mutationFn: updatePassenger,
+  });
+
+  const navigate = useNavigate();
+
+  const handlePay = (e) => {
+    e.preventDefault();
+    mutation.mutateAsync({ sid, passengers });
+    navigate(`/pay/${sid}`);
+  };
 
   return (
     <Box
@@ -63,6 +83,15 @@ const VerifyDetails = () => {
             </Box>
           </Box>
         </Stack>
+
+        <Box sx={{ mb: 2, display: "flex" }}>
+          <Button onClick={onBack} sx={{ mt: 1, mr: 1 }}>
+            Back
+          </Button>
+          <Button variant="contained" onClick={handlePay} sx={{ mt: 1, mr: 1 }}>
+            Pay
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

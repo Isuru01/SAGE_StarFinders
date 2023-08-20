@@ -1,5 +1,6 @@
 import React from "react";
 import Destination from "../component/cards/Destination";
+
 import { Box } from "@mui/material";
 
 const Home = () => {

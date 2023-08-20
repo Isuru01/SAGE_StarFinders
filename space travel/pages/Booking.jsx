@@ -1,4 +1,5 @@
 import React from "react";
+import { BookingContext } from "../context/BookingProvider.jsx";
 import {
   Container,
   Box,
@@ -34,10 +35,13 @@ const steps = [
   },
 ];
 
+// ... (import statements)
+
 const Booking = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
+    console.log("call");
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
@@ -47,6 +51,21 @@ const Booking = () => {
 
   const handleReset = () => {
     setActiveStep(0);
+  };
+
+  const renderStepContent = (stepIndex) => {
+    switch (stepIndex) {
+      case 0:
+        return <TicketForm onNext={handleNext} />;
+      case 1:
+        return <SelectSeats onNext={handleNext} onBack={handleBack} />;
+      case 2:
+        return <PassengerDetails onNext={handleNext} onBack={handleBack} />;
+      case 3:
+        return <VerifyDetails onNext={handleNext} onBack={handleBack} />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -68,9 +87,10 @@ const Booking = () => {
               {step.label}
             </StepLabel>
             <StepContent>
-              <Typography>{step.description}</Typography>
+              {/* Render the component directly */}
               <Box sx={{ mb: 2 }}>
-                <div>
+                {renderStepContent(index)}
+                {/* <div>
                   <Button
                     variant="contained"
                     onClick={handleNext}
@@ -85,7 +105,7 @@ const Booking = () => {
                   >
                     Back
                   </Button>
-                </div>
+                </div> */}
               </Box>
             </StepContent>
           </Step>

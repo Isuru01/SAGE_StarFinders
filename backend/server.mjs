@@ -20,9 +20,11 @@ import cookieParser from "cookie-parser";
 // import router_doctor from "./routes/doctor.router.mjs";
 
 import router_search from "./routes/search.router.mjs";
+import router_booking from "./routes/booking.router.mjs";
 import router_service from "./routes/service.router.mjs";
 import router_user from "./routes/user.route.mjs";
 import router_shuttle from "./routes/shuttle.router.mjs";
+import router_payment from "./routes/payment.router.mjs";
 import router_plannet from "./routes/planet.router.mjs";
 
 // console.log(dayjs().format("ddd"));
@@ -62,13 +64,16 @@ app.use(urlencoded({ extended: true }));
 // });
 
 app.use("/api/shuttle", router_shuttle);
+app.use("/api/pay", router_payment);
 app.use("/api/service", router_service);
 app.use("/api/user", router_user);
 app.use("/api/search", router_search);
 app.use("/api/plannet", router_plannet);
+app.use("/api/booking", router_booking);
 app.use(errorHandler);
 
-cron.schedule("* * * * *", scheduleShuttle);
+// //
+// cron.schedule("* * * * *", scheduleShuttle);
 
 const startServer = async () => {
   try {

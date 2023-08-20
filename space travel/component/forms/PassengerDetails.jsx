@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Box,
+  Button,
   Stack,
   TextField,
   Select,
@@ -8,57 +9,40 @@ import {
   Typography,
 } from "@mui/material";
 
-const PassengerDetails = () => {
+import { BookingContext } from "../../context/BookingProvider";
+import { fetchSeatMap } from "../../api/seats.api.mjs";
+import { useQuery } from "@tanstack/react-query";
+import AdultPassenger from "./AdultPassenger";
+import MinorPassenger from "./MinorPassenger";
+
+const PassengerDetails = ({ onBack, onNext }) => {
   const [nationality, setNationality] = useState("");
+
+  const { selected, setSelected, booking } = useContext(BookingContext);
+
+  console.log(selected);
 
   return (
     <Box>
-      <Typography color="primary" variant="h6">
-        Adult Passenger 1
-      </Typography>
-      <Stack spacing={2} sx={{ my: 1 }}>
-        <TextField size="small" name="name" label="Passenger Name" />
-        <TextField size="small" name="passport" label="Galactic Passport" />
-
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          size="small"
-          value={nationality}
-          label="Nationality"
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-
-        <TextField size="small" name="loyalty" label="Galactic Loyalty ID" />
-        <TextField size="small" name="contact" label="Contact" />
-      </Stack>
-
       <hr style={{ margin: "25px 0" }} />
 
-      <Typography color="primary" variant="h6">
-        Children 1
-      </Typography>
-      <Stack spacing={2} sx={{ my: 1 }}>
-        <TextField size="small" name="name" label="Children Name" />
-        <TextField size="small" name="passport" label="Galactic Passport" />
+      <Box>
+        {/* {selected.forEach((element) => {
+          return <PassengerDetails />;
+        })} */}
+        {selected.map((seat) => (
+          <AdultPassenger seat={seat.seat} />
+        ))}
+      </Box>
 
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          size="small"
-          value={nationality}
-          label="Nationality"
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-
-        <TextField size="small" name="parent" label="Parent Name" />
-      </Stack>
+      <Box sx={{ mb: 2, display: "flex" }}>
+        <Button onClick={onBack} sx={{ mt: 1, mr: 1 }}>
+          Back
+        </Button>
+        <Button variant="contained" onClick={onNext} sx={{ mt: 1, mr: 1 }}>
+          Continue
+        </Button>
+      </Box>
     </Box>
   );
 };

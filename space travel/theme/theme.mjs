@@ -3,9 +3,7 @@ import { orange } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
-    text: {
-      primary: "#FFFFFF",
-    },
+    text: {},
   },
 });
 
