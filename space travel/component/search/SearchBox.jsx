@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Stack, TextField, Autocomplete, Button } from "@mui/material";
 
-const top100Films = [];
+const top100Films = [{ label: "Mar", value: "Mars" }];
 
 const SearchBox = () => {
   return (
