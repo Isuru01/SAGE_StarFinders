@@ -42,7 +42,14 @@ app.use(
 const { json, urlencoded } = express;
 
 app.use(morgan("dev"));
-app.use(json());
+
+app.use((req, res, next) => {
+  if (req.originalUrl === "/pay/webhook") {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.use(cookieParser());
 app.use(urlencoded({ extended: true }));
 

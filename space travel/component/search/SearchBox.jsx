@@ -16,6 +16,7 @@ const SearchBox = () => {
             <TextField {...params} label="Choose start locaton" />
           )}
         />
+
         <Autocomplete
           id="free-solo-demo"
           size="small"

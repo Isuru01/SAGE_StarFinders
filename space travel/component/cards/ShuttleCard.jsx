@@ -47,7 +47,11 @@ const ShuttleCard = ({ data, index }) => {
           >
             <Box>
               <Typography
-                sx={{ fontSize: "1.2rem", fontWeight: 500, lineHeight: 1.3 }}
+                sx={{
+                  fontSize: "1.2rem",
+                  fontWeight: 500,
+                  lineHeight: 1.3,
+                }}
               >
                 {depPort}
               </Typography>
