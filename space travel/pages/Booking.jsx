@@ -1,5 +1,6 @@
 import React from "react";
 import { BookingContext } from "../context/BookingProvider.jsx";
+import { ThemeProvider, createTheme } from "@mui/material/styles"
 import {
   Container,
   Box,
@@ -37,6 +38,22 @@ const steps = [
 
 // ... (import statements)
 
+const theme = createTheme({
+  // Customize theme properties here
+  palette: {
+    primary:{
+      main:'rgba(77, 71, 195, 1)'
+    },
+    secondary:{
+      main:'rgba(232, 231, 255, 1)'
+    },
+    text: {
+      primary: '#000000', // Change this to your desired primary color
+    },
+    // Add other palette customization if needed
+  },
+});
+
 const Booking = () => {
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -69,6 +86,7 @@ const Booking = () => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <Box
       sx={{
         maxWidth: 400,
@@ -121,6 +139,7 @@ const Booking = () => {
         </Paper>
       )}
     </Box>
+    </ThemeProvider>
   );
 };
 
