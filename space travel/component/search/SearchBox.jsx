@@ -26,7 +26,7 @@ const SearchBox = () => {
             <TextField {...params} label="Choose your destination" />
           )}
         />
-        <Button size="small" variant="contained">
+        <Button size="large" variant="contained">
           Let's go
         </Button>
       </Stack>
