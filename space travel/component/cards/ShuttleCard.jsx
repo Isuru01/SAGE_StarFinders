@@ -23,7 +23,10 @@ const ShuttleCard = ({ data, index }) => {
 
   return (
     <>
-      <Card onClick={handleOption} sx={{ bgcolor: "#7A77B4", mt: 2, p: 1 }}>
+      <Card
+        onClick={handleOption}
+        sx={{ bgcolor: "#7A77B4", color: "#FFFFFF", mt: 2, p: 1 }}
+      >
         <Typography sx={{ fontWeight: "500", mb: 1 }}>
           Opt {index + 1} Non Stop {duration.slice(0, 15)}
         </Typography>
@@ -55,7 +58,7 @@ const ShuttleCard = ({ data, index }) => {
               >
                 {depPort}
               </Typography>
-              <Typography sx={{ fontSize: "0.6rem", lineHeight: 1.4 }}>
+              <Typography sx={{ fontSize: "0.6rem", lineHeight: 1 }}>
                 On {formatTime(depTime)[0]}
               </Typography>
               <Typography sx={{ fontSize: "0.6rem", lineHeight: 1 }}>
@@ -88,7 +91,11 @@ const ShuttleCard = ({ data, index }) => {
           }}
         >
           <Typography variant="subtitle2">Carrier {carrier}</Typography>
-          <Button size="small" variant="outlined" sx={{backgroundColor:'rgba(232, 231, 255, 1)'}}>
+          <Button
+            size="small"
+            variant="outlined"
+            sx={{ backgroundColor: "rgba(232, 231, 255, 1)" }}
+          >
             Book
           </Button>
         </Box>

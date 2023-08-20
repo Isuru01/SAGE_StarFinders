@@ -18,8 +18,6 @@ import cookieParser from "cookie-parser";
 // import authenticate from "./middleware/authenticate.mjs";
 // import router_user from "./routes/user.router.mjs";
 // import router_payment from "./routes/payment.router.mjs";
-// import router_search from "./routes/search.router.mjs";
-// import router_doctor from "./routes/doctor.router.mjs";
 
 import router_search from "./routes/search.router.mjs";
 import router_booking from "./routes/booking.router.mjs";
@@ -29,7 +27,7 @@ import router_shuttle from "./routes/shuttle.router.mjs";
 import router_payment from "./routes/payment.router.mjs";
 import router_plannet from "./routes/planet.router.mjs";
 
-// console.log(dayjs().format("ddd"));
+console.log(dayjs().format("ddd"));
 
 const app = express();
 
@@ -73,6 +71,17 @@ app.use(urlencoded({ extended: true }));
 //   next();
 // });
 
+/*
+   service create a blueprint for the shuttle and everyday check the date and
+   open bookings prior to week for the shuttle
+   when creating shuttle emp shuttle model will automatically created temp shuttle is the one 
+   gives access to the user to select seat not the shuttle 
+   once user selected a seat it will be lock for others untill user completing the booking seat step will be 1
+   plan was to if the user complete the booking within 10min set the seat step back to 
+   0 and available others users to select 
+   stripe web hooks plan to implement 
+*/
+
 app.use("/api/shuttle", router_shuttle);
 app.use("/api/pay", router_payment);
 app.use("/api/service", router_service);
@@ -83,7 +92,8 @@ app.use("/api/booking", router_booking);
 app.use(errorHandler);
 
 // //
-// cron.schedule("* * * * *", scheduleShuttle);
+// cron.schedule("* * * * * *", scheduleShuttle);
+cron.schedule("0 12 * * *", scheduleShuttle);
 
 const startServer = async () => {
   try {
